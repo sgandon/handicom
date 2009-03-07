@@ -3,6 +3,9 @@
 
 <product name="Handicom" id="org.ekaii.diaporama.rcp.product" application="diaporama.application.id" version="1.0.0" useFeatures="true">
 
+   <aboutInfo>
+      <image path="/org.ekaii.diaporama.rcp/icons/wizban/NewDiaporama.gif"/>
+   </aboutInfo>
 
    <configIni use="default">
    </configIni>
