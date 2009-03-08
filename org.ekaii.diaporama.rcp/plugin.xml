@@ -133,6 +133,14 @@
                name="startupProgressRect"
                value="5,275,445,15">
          </property>
+         <property
+               name="aboutImage"
+               value="icons/wizban/NewDiaporama.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="HandiCom V 1.0.0&#x0D;&#x0A;(c) Copyright Sébastien Gandon 2009.  All rights reserved.">
+         </property>
       </product>
    </extension>
 
