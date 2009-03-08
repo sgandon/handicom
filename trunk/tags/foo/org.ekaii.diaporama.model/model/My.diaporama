@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<org.ekaii:SlideShow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.ekaii="www.ekaii.org" FirstSlide="//@AllSlides.1">
-  <AllSlides AutomaticNextSlide="//@AllSlides.1" SlideName="La terre" ClickedNextSlide="//@AllSlides.3"/>
-  <AllSlides AutomaticNextSlide="//@AllSlides.2" SlideName="L'air"/>
-  <AllSlides AutomaticNextSlide="//@AllSlides.0" SlideName="La mer"/>
-  <AllSlides AutomaticNextSlide="//@AllSlides.4" SlideName="une voiture"/>
-  <AllSlides AutomaticNextSlide="//@AllSlides.3" SlideName="Un vélo"/>
-</org.ekaii:SlideShow>
