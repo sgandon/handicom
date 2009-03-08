@@ -23,6 +23,15 @@ import org.ekaii.diaporama.rcp.DiaporamaPlugin;
 
 public class SlideShowToHtml {
 
+	private static final String SLIDE_NAME = "@SLIDE_NAME@";
+	private static final String CLICKED_NEXT_SLIDE_URL = "@CLICKED_NEXT_SLIDE_URL@";
+	private static final String AUTO_NEXT_SLIDE_URL = "@AUTO_NEXT_SLIDE_URL@";
+	private static final String CLICK_SOUND_URL = "@CLICK_SOUND_URL@";
+	private static final String SLIDE_SOUND_URL = "@SLIDE_SOUND_URL@";
+	private static final String PICTURE_URL = "@PICTURE_URL@";
+	private static final String PICTURE_RESIZE_POLICY = "@PICTURE_RESIZE_POLICY@";
+	private static final String CLICK_TIMEOUT = "@CLICK_TIMEOUT@";
+	private static final String SLIDE_DURATION = "@SLIDE_DURATION@";
 	private static final String SLIDE_HTML_TEMPLATE_PATH = "templates/slide.html.template";
 	private final IPath destPath;
 
@@ -81,12 +90,8 @@ public class SlideShowToHtml {
 
 		// export all the slides
 		String templateString = getTemplateString();
-		// and fills template data with slideshow parameters
-		templateString = templateString.replaceAll("@SLIDE_DURATION@", "" + slideShow.getDefaultSlideDuration());
-		templateString = templateString.replaceAll("@CLICK_TIMEOUT@", "" + slideShow.getClickSoundTimeout());
-		templateString = templateString.replaceAll("@PICTURE_RESIZE_POLICY@", "" + slideShow.getPictureResizingPolicy());
 		for (Slide slide : slideShow.getAllSlides()) {
-			exportSlide(slide, templateString, monitor);
+			exportSlide(slide, templateString, slideShow,monitor);
 		}
 	}
 
@@ -112,7 +117,7 @@ public class SlideShowToHtml {
 		return templateBuf.toString();
 	}
 
-	private void exportSlide(Slide slide, String templateString, IProgressMonitor monitor) throws CoreException, IOException {
+	private void exportSlide(Slide slide, String templateString, SlideShow slideShow, IProgressMonitor monitor) throws CoreException, IOException {
 		// creates a sub folder of the root with the slide name
 		// may fail if the name does not comply to the filesystem
 		IFileSystem localFileSystem = EFS.getLocalFileSystem();
@@ -142,15 +147,15 @@ public class SlideShowToHtml {
 		// replace template missing tags according to slide props
 		{
 			String pictureUrl = pictureIPath != null ? pictureIPath.lastSegment() : "";
-			templateString = templateString.replaceAll("@PICTURE_URL@", pictureUrl);
+			templateString = templateString.replaceAll(PICTURE_URL, pictureUrl);
 		}
 		{
 			String soundUrl = soundIPath != null ? soundIPath.lastSegment() : "dummy.wav";
-			templateString = templateString.replaceAll("@SLIDE_SOUND_URL@", soundUrl);
+			templateString = templateString.replaceAll(SLIDE_SOUND_URL, soundUrl);
 		}
 		{
 			String clickedSoundUrl = clickedSndIPath != null ? clickedSndIPath.lastSegment() : "dummy.wav";
-			templateString = templateString.replaceAll("@CLICK_SOUND_URL@", clickedSoundUrl);
+			templateString = templateString.replaceAll(CLICK_SOUND_URL, clickedSoundUrl);
 		}
 		{
 			String autoNextSlideUrl = "";
@@ -158,7 +163,11 @@ public class SlideShowToHtml {
 				Slide nextSlide = slide.getAutomaticNextSlide();
 				autoNextSlideUrl = "../" + nextSlide.getSlideName() + "/" + nextSlide.getSlideName() + ".html";
 			}
-			templateString = templateString.replaceAll("@AUTO_NEXT_SLIDE_URL@", autoNextSlideUrl);
+			templateString = templateString.replaceAll(AUTO_NEXT_SLIDE_URL, autoNextSlideUrl);
+			//if auto next slide is same then disable automatic open of URL.
+			if (slide == slide.getAutomaticNextSlide()) {
+				templateString = templateString.replaceAll(SLIDE_DURATION, "-1");
+			}
 		}
 		{
 			String clickedNextSlideUrl = "";
@@ -166,12 +175,17 @@ public class SlideShowToHtml {
 				Slide nextSlide = slide.getClickedNextSlide();
 				clickedNextSlideUrl = "../" + nextSlide.getSlideName() + "/" + nextSlide.getSlideName() + ".html";
 			}
-			templateString = templateString.replaceAll("@CLICKED_NEXT_SLIDE_URL@", clickedNextSlideUrl);
+			templateString = templateString.replaceAll(CLICKED_NEXT_SLIDE_URL, clickedNextSlideUrl);
 		}
 		{
 			String slideName = slide.getSlideName() != null ? slide.getSlideName() : "No Name";
-			templateString = templateString.replaceAll("@SLIDE_NAME@", slideName);
+			templateString = templateString.replaceAll(SLIDE_NAME, slideName);
 		}
+		// and fills template data with slideshow parameters
+		templateString = templateString.replaceAll(SLIDE_DURATION, "" + slideShow.getDefaultSlideDuration());
+		templateString = templateString.replaceAll(CLICK_TIMEOUT, "" + slideShow.getClickSoundTimeout());
+		templateString = templateString.replaceAll(PICTURE_RESIZE_POLICY, "" + slideShow.getPictureResizingPolicy());
+		
 		FileWriter templateWriter = new FileWriter(slideFolderIPath.append(slide.getSlideName() + ".html").toFile());
 		try {
 			templateWriter.write(templateString);
