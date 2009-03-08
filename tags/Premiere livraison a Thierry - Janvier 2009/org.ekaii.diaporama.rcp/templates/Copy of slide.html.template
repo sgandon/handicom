@@ -1,0 +1,38 @@
+<html>
+	<BGSOUND id="BGSOUND_ID" LOOP=1 SRC="DUMMY" />
+	<head>
+	<title>1</title>
+	    <meta http-equiv="refresh" content="@SLIDE_DURATION@; URL=@AUTO_NEXT_SLIDE_URL@">
+		<script type="text/javascript" >
+				var CLICK_SOUND = '@CLICK_SOUND_URL@';
+				var INITIAL_SOUND = '@SLIDE_SOUND_URL@';
+				var CLICK_TIMEOUT = "@CLICK_TIMEOUT@";
+				var CLICKED_URL = "@CLICKED_NEXT_SLIDE_URL@";
+				var ACCEPT_CLICK = true;
+				var ACCEPT_ALL_KEYS = true;
+				var ACCEPT_SPACE_KEY = true;
+		</script>
+		<script type="text/javascript" >
+				function playSoundAndGo(){
+					if(ACCEPT_CLICK && CLICKED_URL != ""){ 
+		          		document.all['BGSOUND_ID'].src=CLICK_SOUND;
+				  		setTimeout('clickLocation()', CLICK_TIMEOUT);
+				  	}
+				}
+		
+				function clickLocation() {
+					window.location=CLICKED_URL;
+				}
+				
+				function keyPressed(event) {
+					if (ACCEPT_ALL_KEYS || (ACCEPT_SPACE_KEY && event.keyCode == 32)) {
+						playSoundAndGo();
+					}
+				}
+				document.all['BGSOUND_ID'].src=INITIAL_SOUND;
+		</script>
+	</head>
+	<body onclick="playSoundAndGo();" onkeypress="keyPressed(window.event);">
+		<img src="@PICTURE_URL@" width=@PICTURE_WIDTH@ height=@PICTURE_HEIGHT@ />
+	</body>
+</html>
