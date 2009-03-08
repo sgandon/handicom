@@ -1,0 +1,9 @@
+#Fri Mar 28 23:40:40 CET 2008
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.genmodel
+gmf_dashboard/domainModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.ecore
+gmf_dashboard/generationModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.gmfmap
+gmf_dashboard/option_rcp=*
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/org.ekaii.diaporama.model/model/diaporama.gmftool
