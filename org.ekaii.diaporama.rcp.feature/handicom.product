@@ -5,6 +5,10 @@
 
    <aboutInfo>
       <image path="/org.ekaii.diaporama.rcp/icons/wizban/NewDiaporama.gif"/>
+      <text>
+         HandiCom V 1.0.0
+(c) Copyright Sébastien Gandon 2009.  All rights reserved.
+      </text>
    </aboutInfo>
 
    <configIni use="default">
