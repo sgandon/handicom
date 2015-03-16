@@ -1,0 +1,1 @@
+This application based on the Eclipse RCP platform, EMF and soon GMF helps creates diaporama that may take different routes according to user interactions.
